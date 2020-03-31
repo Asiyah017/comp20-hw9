@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Songs Json</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale-1.0">
+
+        <style type="text/css">
+            
+            html, body{
+                font-size: 20px;
+                background: #FF7F50;
+            }
+
+        </style>
+
+        <script lang="javascript">
+            /* 1. Create a JSON */
+            
+           var songs = [ 
+            
+            {
+                "name": "Girls like you",
+                "artist": [
+                "Maroon 5"
+                ],
+                "genre": [
+                "Pop"
+                ],
+                "year": 2018
+            },
+
+            {
+                "name": "Love Yourself",
+                "artist": [
+                "Justin Bieber"
+                ],
+                "genre": [
+                "Pop"]
+                ,
+                "year": 2015
+            },
+
+            {
+                "name": "Wake Me Up",
+                "artist":[
+                 "Avicii"
+                 ],
+                "genre": [
+                "Pop"
+                ],
+                "year": 2013
+            },
+
+            {
+                "name": "Work",
+                "artist":[
+                 "Rihanna"],
+                "genre": [
+                "RnB"
+                ],
+                "year": 2014
+            },
+
+            {
+                "name": "Queen of Hearts",
+                "artist": [
+                " Juice Newton"
+                ],
+                "genre": [
+                "country"
+                ],
+                "year": 1981
+            },
+
+            {
+                "name": "I hope you dance",
+                "artist":[
+                 "Lee Ann Womack"
+                 ],
+                "genre": [
+                "country"],
+                "year": 2000
+            },
+
+            {
+                "name": "Guitar Town",
+                "artist": [
+                "Steve Earle"
+                ],
+                "genre": [
+                "country"
+                ],
+                "year": 1986
+            },
+
+            {
+                "name": "Paranoid",
+                "artist": [
+                "Black Sabbath"
+                ],
+                "genre": [
+                "metal"
+                ],
+                "year": 1970
+            },
+
+            {
+                "name": "Ace of Spades",
+                "artist": [
+                "Motorhead"
+                ],
+                "genre": [
+                "metal"
+                ],
+                "year": 1980
+            },
+
+            {
+                "name": "Painkiller",
+                "artist": [
+                "Judas Priest"
+                ],
+                "genre": [
+                "metal"]
+                ,
+                "year": 1990
+            }       
+
+        ]; 
+
+        </script>
+    </head>
+    <body>
+       
+        <p id="serial">
+            <!-- Part 2. Serialize and display -->
+        </p>
+
+        <p id = "user-friendly" style = "text-align: center;"> </p>
+
+
+        <p id="try"> </p>
+
+        <form>
+            <label><b>Filter by genre: </b></label>
+            <select id="filter">
+                <option>-- Select Genre --</option>
+            </select>
+            <button type = "button" onclick = "filter_genre()"> Filter </button>
+        </form>
+
+        <p id="filtered" style = "text-align: center;">
+
+        </p>
+
+        <script lang="javascript">
+            /* 2. Serialize and display */
+            str = "";
+            for (i = 0; i < songs.length; i++) {
+                str += JSON.stringify(songs[i]) + "<br/>";
+            }
+            document.getElementById("serial").innerHTML = str;
+
+            /*3. Display in a user friendly format*/
+
+            str = "";
+
+            for (i = 0; i < songs.length; i++) {
+                var obj = songs[i];
+                str += "<b>" + obj.name + "</b> <br/>";
+
+                str += "Artist: ";
+                for (j = 0; j < obj.artist.length; j++){
+                    
+                    if( j == 0){
+                        str += obj.artist[j];
+                    }
+                    else{
+                        str += ", " + obj.artist[j];
+                    }
+                }
+
+                str += "<br />"
+
+                str += "Genre: ";
+                for (k = 0; k < obj.genre.length; k++){
+                    
+                    if( k == 0){
+                        str += obj.genre[k];
+                    }
+                    else{
+                        str += ", " + obj.genre[k];
+                    }
+                }
+
+                str += "<br />"
+
+                str += "Released " + obj.year + "<br />"
+
+               str += "<br />"
+            }
+
+            document.getElementById("user-friendly").innerHTML = str;
+
+
+            var all = new Array();
+            var opt = "";
+            
+            for(i = 0; i < songs.length; i++){
+                var obj = songs[i];
+
+                for ( j = 0; j < obj.genre.length; j++){
+                    
+                    if(all.indexOf(obj.genre[j]) == -1){
+                        all.push(obj.genre[j]);
+                        opt += '<option>' + obj.genre[j] + '</option>'
+                    }
+                }
+            }
+
+            document.getElementById("filter").innerHTML += opt;
+
+
+            function filter_genre()
+            {
+                str = "";
+
+                var x = document.getElementById("filter");
+
+                var index = x.selectedIndex;
+                var cur = x.options[index].text;
+
+                var match = false;
+
+                for ( i = 0; i < songs.length; i++){
+                    var obj = songs[i];
+
+                    for ( j = 0; j < obj.genre.length; j++){
+                        if ( obj.genre[j] = cur){
+                            match = true;
+                            break;
+                        }
+                    }
+
+                    if (match){
+                        str += "<b>" + obj.name + "</b> <br/>";
+
+                        str += "Artist: "
+                        for (j = 0; j < obj.artist.length; j++){
+                            
+                            if( j == 0){
+                                str += obj.artist[j];
+                            }
+                            else{
+                                str += ", " + obj.artist[j];
+                            }
+                        }
+
+                        str += "<br />"
+
+                        str += "Genre: "
+                        for (k = 0; k < obj.genre.length; k++){
+                            
+                            if( k == 0){
+                                str += obj.genre[k];
+                            }
+                            else{
+                                str += ", " + obj.genre[k];
+                            }
+                        }
+
+                        str += "<br />"
+
+                        str += "Released " + obj.year + "<br />"
+
+                       str += "<br />"
+                    }
+
+                    match = false;
+
+                }
+
+                document.getElementById("filtered").innerHTML = str;
+
+                window.scrollTo(0, document.body.scrollHeight);
+            }
+                
+
+
+        </script>
+
+
+    </body>
+</html>
